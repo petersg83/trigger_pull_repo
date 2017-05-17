@@ -1,4 +1,5 @@
 
 module.exports = {
-  repository: '' // TO_REPLACE
+  repository: '', // TO REPLACE
+  urlToTrigger: '' // TO REPLACE
 }

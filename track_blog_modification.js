@@ -6,9 +6,11 @@ var config = require('./config.js')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.post('/blog_modified', (req, res) => {
+app.post(config.urlToTrigger, (req, res) => {
   var Git = require('nodegit')
   var repo
+
+  console.log(req.body)
 
   Git.Repository.open(config.repository)
   .then((repository) => {
@@ -22,6 +24,7 @@ app.post('/blog_modified', (req, res) => {
     })
   })
   .then(() => repo.mergeBranches('master', 'origin/master'))
+  .done(console.log('done !'))
 
   res.end()
 })
