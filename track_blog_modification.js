@@ -12,19 +12,21 @@ app.post(config.urlToTrigger, (req, res) => {
 
   console.log(req.body)
 
-  Git.Repository.open(config.repository)
-  .then((repository) => {
-    repo = repository
+  if (req.body.ref === 'refs/heads/master') {
+    Git.Repository.open(config.repository)
+    .then((repository) => {
+      repo = repository
 
-    return repo.fetchAll({
-      callbacks: {
-        credentials: (url, username) => Git.Cred.sshKeyFromAgent(username),
-        certificateCheck: () => 1
-      }
+      return repo.fetchAll({
+        callbacks: {
+          credentials: (url, username) => Git.Cred.sshKeyFromAgent(username),
+          certificateCheck: () => 1
+        }
+      })
     })
-  })
-  .then(() => repo.mergeBranches('master', 'origin/master'))
-  .done(console.log('done !'))
+    .then(() => repo.mergeBranches('master', 'origin/master'))
+    .catch((e) => console.log(e))
+  }
 
   res.end()
 })
