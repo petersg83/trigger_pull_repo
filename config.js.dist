@@ -1,5 +1,6 @@
 
 module.exports = {
-  repository: '', // TO REPLACE
-  urlToTrigger: '' // TO REPLACE
+  repositoryPath: '',
+  urlToListen: '',
+  portToListen: 
 }

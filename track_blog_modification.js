@@ -6,14 +6,14 @@ var config = require('./config.js')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.post(config.urlToTrigger, (req, res) => {
+app.post(config.urlToListen, (req, res) => {
   var Git = require('nodegit')
   var repo
 
   console.log(req.body)
 
   if (req.body.ref === 'refs/heads/master') {
-    Git.Repository.open(config.repository)
+    Git.Repository.open(config.repositoryPath)
     .then((repository) => {
       repo = repository
 
@@ -31,4 +31,4 @@ app.post(config.urlToTrigger, (req, res) => {
   res.end()
 })
 
-app.listen(8000)
+app.listen(config.portToListen)
